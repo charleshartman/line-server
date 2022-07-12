@@ -87,7 +87,7 @@ What third-party libraries or other tools does the system use? How did you choos
 
 How long did you spend on this exercise? If you had unlimited more time to spend on this, how would you spend it and how would you prioritize each item?
 
-- 12-15 hours, much of it looking at Redis and testing its performance in this application as a simple data store alternative to using a simple JS object.
+- 10-12 hours, much of it looking at Redis and testing its performance in this application as a simple data store alternative to using a simple JS object.
 - if I were to spend more time I would research and implement a DB and cache solution and deploy it on AWS and then test it more vigorously.
 
 If you were to critique your code, what would you have to say about it?
