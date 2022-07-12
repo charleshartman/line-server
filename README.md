@@ -1,4 +1,6 @@
-# Salsify Sr. Backend Software Engineer Assignment - Line Server Problem
+# Salsify Sr. Backend Software Engineer Assignment
+
+## Line Server Problem
 
 ### Installation and usage
 
@@ -18,9 +20,9 @@
 
 - How does your system work? (if not addressed in comments in source)
 
-I examined two slightly different approaches to this problem. These are contained in `index.js` and `index_with_redis.js`. They are essentially the same, with the exception of how the data from the processed text file is stored. With `index.js`, the processed data is stored in a simple JavaScript object with each line number as key and line text as value. With smaller source files (my sample data file, `boston_food.csv` is 276.4 MB), my limited testing indicates this is around 10% more performant than the `index_with_redis.js` version that utilizes Redis to store the processed data. If this server needed to process and serve more than 1 or 2GB of data I would look at loading the data into a Postgres database and use Redis for caching.
+  - I examined two slightly different approaches to this problem. These are contained in `index.js` and `index_with_redis.js`. They are essentially the same, with the exception of how the data from the processed text file is stored. With `index.js`, the processed data is stored in a simple JavaScript object with each line number as key and line text as value. With smaller source files (my sample data file, `boston_food.csv` is 276.4 MB), my limited testing indicates this is around 10% more performant than the `index_with_redis.js` version that utilizes Redis to store the processed data. If this server needed to process and serve more than 1 or 2GB of data I would look at loading the data into a Postgres database and use Redis for caching.
 
-As is, `index.js` is a simple Express server. The data file is processed (synchronously) and the server accepts and fills requests asynchronously. Run locally, I have tested 100 VUs (virtual users) with the `k6` load testing tool (again, my test data file, `boston_food.csv` is 276.4 MB and around 709K lines) with the following results:
+  - As is, `index.js` is a simple Express server. The data file is processed (synchronously) and the server accepts and fills requests asynchronously. Run locally, I have tested 100 VUs (virtual users) with the `k6` load testing tool (again, my test data file, `boston_food.csv` is 276.4 MB and around 709K lines) with the following results:
 
 ```txt
           /\      |‾‾| /‾‾/   /‾‾/
@@ -58,13 +60,15 @@ default ✓ [======================================] 100 VUs  30s
      vus_max........................: 100    min=100        max=100
 ```
 
-This is hitting the endpoint with a random line number.
+- Each iteration hits the endpoint with a random line number for each user.
 
 How will your system perform with a 1 GB file? a 10 GB file? a 100 GB file?
-This system is constrained by RAM. Both overall RAM on the machine and the RAM allocated to Node.js. As noted above. To make this API server more robust I would implement a database and cache.
+
+- This system is constrained by RAM. Both overall RAM on the machine and the RAM allocated to Node.js. As noted above. To make this API server more robust I would implement a database and cache.
 
 How will your system perform with 100 users? 10000 users? 1000000 users?
-I could only test 100 VUs with my current hardware. To test more users I would deploy this solution on AWS or Digital Ocean and use a serverless framework for scalable API load testing like this one: [Artemis](https://artemis-load-testing.github.io/), which is also my last project. :) This can test up to 20000 VUs. Again, if we are dealing with larger datasets I would implement a DB and cache. If the dataset is static (as this one seems to be)... meaning we are only performing writes during initial processing, then scaling the data storage seems less complicated.
+
+- I could only test 100 VUs with my current hardware. To test more users I would deploy this solution on AWS or Digital Ocean and use a serverless framework for scalable API load testing like this one: [Artemis](https://artemis-load-testing.github.io/), which is also my last project. :) This can test up to 20000 VUs. Again, if we are dealing with larger datasets I would implement a DB and cache. If the dataset is static (as this one seems to be)... meaning we are only performing writes during initial processing, then scaling the data storage seems less complicated.
 
 What documentation, websites, papers, etc did you consult in doing this assignment?
 
