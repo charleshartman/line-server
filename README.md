@@ -68,7 +68,7 @@ How will your system perform with a 1 GB file? a 10 GB file? a 100 GB file?
 
 How will your system perform with 100 users? 10000 users? 1000000 users?
 
-- I could only test 100 VUs with my current hardware. To test more users I would deploy this solution on AWS or Digital Ocean and use a serverless framework for scalable API load testing like this one: [Artemis](https://artemis-load-testing.github.io/), which is also my last project. :) This can test up to 20000 VUs. Again, if we are dealing with larger datasets I would implement a DB and cache. If the dataset is static (as this one seems to be)... meaning we are only performing writes during initial processing, then scaling the data storage seems less complicated.
+- I could only test 100 VUs with my current hardware. To test more users I would deploy this solution on AWS or Digital Ocean and use a serverless framework for scalable API load testing like this one: [Artemis](https://artemis-load-testing.github.io/), which is also my last project. :) Artemis can test up to 20000 VUs. Again, if we are dealing with larger datasets I would implement a DB and cache. If the dataset will always be static... meaning we are only performing writes during initial processing, then scaling the data storage seems less complicated.
 
 What documentation, websites, papers, etc did you consult in doing this assignment?
 
@@ -82,18 +82,14 @@ What documentation, websites, papers, etc did you consult in doing this assignme
 What third-party libraries or other tools does the system use? How did you choose each library or framework you used?
 
 - Express, simple and relatively robust, I have used it before
-- Redis, I have not used Redis, and I spent probably more time than I should have researching it, but I was happy to get exposure to a cool, widely used tool
+- Redis, I had not used Redis before, so I spent a fair amount of time researching it, but I was happy to get exposure to a cool, widely used tool
 - n-readlines, I used this specifically because it was synchronous since I wanted the server blocked until the input file was read in and processed.
 
 How long did you spend on this exercise? If you had unlimited more time to spend on this, how would you spend it and how would you prioritize each item?
 
-- 12-15 hours, much of it looking at Redis and testing its performance in this application as a simple data store alternative to just using a JS object.
+- 12-15 hours, much of it looking at Redis and testing its performance in this application as a simple data store alternative to using a simple JS object.
 - if I were to spend more time I would research and implement a DB and cache solution and deploy it on AWS and then test it more vigorously.
 
 If you were to critique your code, what would you have to say about it?
 
 - I think it is clear and readable. Some things like using a separate `config` file to hold some env values might be a bit of overkill, but I like the modularity. If I were to keep working on this I would probably extract the `processFile` functionality to a separate file as well. I also wonder if that functionality could be made more performant.
-
-Last note:
-
-- obviously, this is the product of my current thinking without outside collaboration, in a team setting I would have reached out a few times along the way to confirm assumptions and get other perspectives. I am very open to the possibility that there may be much better approaches here. :)
